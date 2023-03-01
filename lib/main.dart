@@ -10,11 +10,16 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter App',
-      home: MyHomePage(),
+    return MaterialApp(
+      title: 'Personal Expenses',
+      theme: ThemeData(
+          primarySwatch: Colors.green,
+          colorScheme: ColorScheme.fromSwatch()
+              .copyWith(primary: Colors.green, secondary: Colors.amber)),
+      home: const MyHomePage(),
     );
   }
 }
@@ -55,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return GestureDetector(
             onTap: () {},
-            child: NewTransaction(_addNewTransaction),
             behavior: HitTestBehavior.opaque,
+            child: NewTransaction(_addNewTransaction),
           );
         });
   }
@@ -65,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter App'),
+        title: const Text('Personal Expenses'),
         actions: [
           IconButton(
               onPressed: () => _startAddNewTransaction(context),
