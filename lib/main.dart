@@ -18,7 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.green,
           colorScheme: ColorScheme.fromSwatch()
-              .copyWith(primary: Colors.green, secondary: Colors.amber)),
+              .copyWith(primary: Colors.green, secondary: Colors.amber),
+          fontFamily: 'Quicksand',
+          appBarTheme: const AppBarTheme(
+              titleTextStyle: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold))),
       home: const MyHomePage(),
     );
   }
