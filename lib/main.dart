@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'widgets/new_transaction.dart';
 import 'widgets/transaction_list.dart';
+import 'widgets/chart.dart';
+
 import './models/transaction.dart';
 
 void main() {
@@ -38,15 +40,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransaction = [
-    Transaction(
-        id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
-    Transaction(
-        id: 't2',
-        title: 'Weekly Groceries',
-        amount: 16.53,
-        date: DateTime.now())
+  final List<Transaction> _userTransactions = [
+    // Transaction(
+    //     id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
+    // Transaction(
+    //     id: 't2',
+    //     title: 'Weekly Groceries',
+    //     amount: 16.53,
+    //     date: DateTime.now())
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where(
+      (tx) {
+        return tx.date.isAfter(DateTime.now().subtract(
+          const Duration(days: 7),
+        ));
+      },
+    ).toList();
+  }
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -56,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         date: DateTime.now());
 
     setState(() {
-      _userTransaction.add(newTx);
+      _userTransactions.add(newTx);
     });
   }
 
@@ -87,15 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                elevation: 5,
-                child: Text('CHART!'),
-              ),
-            ),
-            TransactionList(_userTransaction),
+            Chart(recentTransactions: _recentTransactions),
+            TransactionList(_userTransactions),
           ],
         ),
       ),
